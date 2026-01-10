@@ -9,36 +9,26 @@ import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import pages.AlertPage;
+import utils.DriverFactory;
 
 import java.time.Duration;
 
 public class AlertTests {
-    WebDriver driver;
-
-    @BeforeMethod
-    public void setup(){
-        ChromeOptions options=new ChromeOptions();
-        options.addArguments("--incognito");
-        options.addArguments("--start-maximized");
-
-        driver=new ChromeDriver(options);
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
-    }
-
-    @AfterMethod
-    public void teardown(){
-        driver.quit();
-    }
 
     @Test
     public void test1(){
-        driver.get("https://demo.automationtesting.in/Alerts.html");
+        DriverFactory.getDriver().get("https://demo.automationtesting.in/Alerts.html");
 
-        driver.findElement(By.xpath("//a[@href=\"#Textbox\"]")).click();
-        driver.findElement(By.xpath("//button[@onclick=\"promptbox()\"]")).click();
-        Alert alert=driver.switchTo().alert();
-        alert.sendKeys("Levan Markozia");
-        alert.accept();
-        Assert.assertEquals(driver.findElement(By.id("demo1")).getText(),"Hello Levan Markozia How are you today");
+//        driver.findElement(By.xpath("//a[@href=\"#Textbox\"]")).click();
+//        driver.findElement(By.xpath("//button[@onclick=\"promptbox()\"]")).click();
+//        Alert alert=driver.switchTo().alert();
+//        alert.sendKeys("Levan Markozia");
+//        alert.accept();
+//        Assert.assertEquals(driver.findElement(By.id("demo1")).getText(),"Hello Levan Markozia How are you today");
+        AlertPage alertPage=new AlertPage(DriverFactory.getDriver())
+                .triggerTextboxAlert()
+                .enterName("Levan Markozia");
+        Assert.assertEquals(DriverFactory.getDriver().findElement(By.id("demo1")).getText(),"Hello Levan Markozia How are you today");
     }
 }
