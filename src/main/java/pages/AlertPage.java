@@ -5,10 +5,12 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import utils.DriverFactory;
 
+import java.awt.*;
+
 public class AlertPage extends BasePage{
     private By textbox=By.xpath("//a[@href=\"#Textbox\"]");
     private By promptbox=By.xpath("//button[@onclick=\"promptbox()\"]");
-    public AlertPage(WebDriver driver){
+    public AlertPage(WebDriver driver) throws AWTException {
         super(driver);
     }
     public AlertPage triggerTextboxAlert(){
